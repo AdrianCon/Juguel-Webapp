@@ -1,0 +1,149 @@
+    <!DOCTYPE html>
+<html>
+    <head>
+        <!-- #include file="includes_header.html" -->
+
+        <!-- DataTables -->
+        <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- #include file="header.html" -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <div class="">
+                        <div class="page-header-title">
+                            <h4 class="page-title">Configuracion</h4>
+                        </div>
+                    </div>
+
+                    <div class="page-content-wrapper ">
+                        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="table-responsive">
+                                                        <table id="datatable-buttons" class="table table-striped table-bordered display">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Tipo</th>
+                                                                <th>Nombre</th>
+                                                                <th>Contrasena</th>
+                                                                <th>Contacto</th>
+                                                                <th>URL</th>
+                                                                <th>Comentario</th>
+                                                            </tr>
+                                                            </thead>
+
+
+                                                            <tbody>
+                                                           
+                                                            </tbody>
+                                                        </table> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> <!-- End Row -->
+
+                        </div><!-- container -->
+
+                    </div> <!-- Page content Wrapper -->
+
+                </div> <!-- content -->
+
+                <footer class="footer">
+                    2018 - Juguel Uniformes
+                </footer>
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/modernizr.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+        <!-- Datatables-->
+        <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
+        <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+        <script src="assets/plugins/datatables/jszip.min.js"></script>
+        <script src="assets/plugins/datatables/pdfmake.min.js"></script>
+        <script src="assets/plugins/datatables/vfs_fonts.js"></script>
+        <script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.print.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.keyTable.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.scroller.min.js"></script>
+
+        <!-- Datatable init js -->
+        <script src="assets/pages/datatables.init.js"></script>
+
+
+        <script src="assets/js/app.js"></script>
+
+        <script type="text/javascript">
+            var Configuracion = Parse.Object.extend("Configuracion");
+            var query = new Parse.Query(Configuracion);
+            //query.equalTo("Configuracion", true);
+            query.find({
+              success: function(results) {
+                var table = $('#datatable-buttons').DataTable();
+                // Do something with the returned Parse.Object values
+                for (var i = 0; i < results.length; i++) {
+                    var object = results[i];                    
+                    var data = [];
+                    data.push(object.get("Tipo") == null? "-" : String(object.get("Tipo")));
+                    data.push(object.get("Nombre") == null? "-" : String(object.get("Nombre")));
+                    data.push(object.get("Contrasena") == null? "-" : String(object.get("Contrasena")));
+                    data.push(object.get("Contacto") == null? "-" : String(object.get("Contacto")));
+                    data.push(object.get("URL") == null? "-" : String(object.get("URL")));
+                    data.push(object.get("Comentario") == null? "-" : String(object.get("Comentario")));
+                    table.row.add(data).draw();
+                }
+              },
+              error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+              }
+            });
+            //});
+        </script>
+    </body>
+</html>

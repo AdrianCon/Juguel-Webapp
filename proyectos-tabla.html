@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- #include file="includes_header.html" -->
+
+        <!-- DataTables -->
+        <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            
+            <!-- #include file="header.html" -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <div class="">
+                        <div class="page-header-title">
+                            <h4 class="page-title">Registro de Eventos</h4>
+                        </div>
+                    </div>
+
+                    <div class="page-content-wrapper ">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <h2 id="NombreProyecto" class="m-b-30 m-t-0">Registro de Eventos</h2>
+                                            <h4 id="currentDeadline"> </h4>
+                                            <table id="datatable-buttons" class="table table-striped table-bordered display">
+                                                <thead>
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Nombre</th>
+                                                    <th>Porcentaje</th>
+                                                    <th>Comentario</th>
+                                                    <th>Cambio Deadline</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <!-- Llenado dinámico con Parse -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- End row -->
+
+                        </div><!-- container -->
+
+                    </div> <!-- Page content Wrapper -->
+
+                </div> <!-- content -->
+
+                <footer class="footer">
+                    © 2016 - 2017 Appzia - All Rights Reserved.
+                </footer>
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/modernizr.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+        <script src="assets/js/app.js"></script>
+
+        <!-- Datatables-->
+        <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
+        <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+        <script src="assets/plugins/datatables/jszip.min.js"></script>
+        <script src="assets/plugins/datatables/pdfmake.min.js"></script>
+        <script src="assets/plugins/datatables/vfs_fonts.js"></script>
+        <script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.print.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.keyTable.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.scroller.min.js"></script>
+
+        <!-- Datatable init js -->
+        <script src="assets/pages/datatables.init.js"></script>
+
+        <!-- Plugins Init js -->
+        <script src="assets/pages/form-advanced.js"></script>
+
+        <!--Timeline-->
+        <script type="text/javascript">
+            var claseProyectos = Parse.Object.extend("Proyectos");
+            var query = new Parse.Query(claseProyectos);
+
+            var url = document.URL;
+            var objectId = url.substr(url.indexOf("?")+1);
+            query.get(objectId,{
+                success: function(result) {
+                    // Actualiza fecha de deadline en DatetimePicker
+                    var fecha = result.get("Deadline");
+
+                    // Genera Timeline
+                    $("#NombreProyecto").text(result.get("Nombre"));
+                    $('#currentDeadline').text(fecha.toDateString());
+                    var table = $('#datatable-buttons').DataTable();
+                    var eventos = result.relation("Eventos");
+                    var queryEventos = eventos.query();
+                    queryEventos.descending("createdAt");
+                    queryEventos.find({
+                      success: function(results) {
+                            var createdAt = new Date();
+                            var nombre = "";
+                            var comentario = "";
+                            var currentPorc = -1;
+                            var cambioFecha = false;
+                            var currentFecha = new Date();
+                            // var nextPorc = -1;
+                            // var actType = "";
+                            for (var i = 0; i < results.length; i++){
+                                // if (i < results.length-1){
+                                //     nextPorc = results[i+1].get("Porcentaje");
+                                // }else{
+                                //     nextPorc = -1;
+                                // }
+                                createdAt = results[i].get("createdAt");
+                                nombre = results[i].get("Nombre");
+                                currentPorc = results[i].get("Porcentaje");
+                                comentario = results[i].get("Comentario")
+                                cambioFecha = results[i].get("CambiaDeadline");
+                                currentFecha = results[i].get("Deadline");
+                                // if (currentPorc == 100){
+                                //     actType = "cd-success";
+                                // }else if(cambioFecha){
+                                //     actType = "cd-pink";
+                                // }else if(currentPorc > nextPorc){
+                                //     actType = "cd-primary";
+                                // }else if (currentPorc == nextPorc){
+                                //     actType = "cd-warning";
+                                // }else if(currentPorc < nextPorc){
+                                //     actType = "cd-danger";
+                                // }               
+                                var data = [];
+                                data.push(dateToString(createdAt,true,true));
+                                data.push(nombre == null? "-" : nombre);
+                                data.push(currentPorc == null? "-" : currentPorc);
+                                data.push(comentario == null? "-" : comentario);
+                                data.push(cambioFecha? currentFecha.toDateString() : "-");
+                                table.row.add(data);
+                            }
+                            table.draw();
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                    });
+                },
+                error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+              }
+             });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- #include file="includes_header.html" -->
+
+        <!-- Libreria inicial para datepicker -->
+        <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            
+            <!-- #include file="header.html" -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <div class="">
+                        <div class="page-header-title">
+                            <h4 class="page-title">Avance</h4>
+                        </div>
+                    </div>
+
+                    <div class="page-content-wrapper ">
+
+                        <div class="container">
+                            <div class="row">
+
+                                <!-- Standard Alert -->
+                                <!--TIpos de class:
+                                    alert-success
+                                    alert-info
+                                    alert-warining
+                                    alert-danger-->
+
+
+                                <div class="col-sm-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+
+                                <div class="col-md-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body" style=" padding-left: 0px; padding-right: 0px;">
+                                            <h2 id="NombreProyecto" class="m-b-30 m-t-0"></h2>
+                                            <p id="Descripcion" class="m-b-30 m-t-0"></p>
+                                            <h4 id="currentDeadline2"> </h4>
+                                            <button type="button" class="btn btn-default waves-effect" onclick="document.getElementById('agregarEvento').scrollIntoView();">Agregar nuevo evento</button>
+                                            <button type="button" class="btn btn-default waves-effect" onclick="redirectToTable()">Ver en forma de tabla</button>
+                                            <!-- TIMELINE -->
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div>
+                                                        <section id="cd-timeline" class="cd-container">
+
+                                                        <!-- Auto relleno con Parse -->
+
+                                                        </section> <!-- cd-timeline -->
+                                                    </div>
+                                                </div><!-- Row -->
+                                            </div>
+                                        </div>  <!-- Panel-body -->
+                                    </div> <!-- Panel-->
+                                    <span></span>
+
+                                    <div class="col-xs-12 col-md-6 m-b-30">
+                                        <form id="agregarEvento" action="#">
+                                            <div class="form-group">
+                                                <label>Nombre</label>
+                                                <div>
+                                                    <textarea required class="form-control" id="nombre" rows="1" placeholder="Nombre"></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label>Porcentaje</label>
+                                                <div>
+                                                    <textarea required class="form-control" id="porcentaje" rows="1" placeholder="Porcentaje"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Comentario</label>
+                                                <div>
+                                                    <textarea required class="form-control" id="comentario" rows="5" placeholder="Comentario"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <p>Deadline:</p>
+                                            <p id="currentDeadline"> </p>
+                                            <div id="deadline" style="display:none" class="form-group">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <input id="datepicker-autoclose" readonly="true" type="text" class="form-control" placeholder="" data-date-format="D d M yyyy" onclick="highlightDeadline()">
+                                                        <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar"></i></span>
+                                                    </div><!-- input-group -->
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" id="myCheck" onclick="Deadline()">
+                                                <label for="myCheck">Cambiar fecha</label>
+                                            </div>
+
+
+                                            <!--label>Tipo de Actualización</label>
+                                            <div class="radio radio-info radio-inline">
+                                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="checked">
+                                                <label for="inlineRadio1"> Avance </label>
+                                            </div>
+                                            <div class="radio radio-danger radio-inline">
+                                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+                                                <label for="inlineRadio2"> Retroceso </label>
+                                            </div-->
+
+                                            <p id = "btnPorcentaje" class="text-muted" type= "button" style="margin-top: 1.5em"></p>
+                                            <button id="btnComentario" type="button" class="btn btn-default waves-effect" >Guardar Evento</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div> <!-- End row -->
+
+                        </div><!-- container -->
+
+                    </div> <!-- Page content Wrapper -->
+
+                </div> <!-- content -->
+
+                <footer class="footer">
+                    © 2016 - 2017 Appzia - All Rights Reserved.
+                </footer>
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/modernizr.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+        <script src="assets/js/app.js"></script>
+
+        <!-- Plugins js -->
+        <script src="assets/plugins/timepicker/bootstrap-timepicker.js"></script>
+        <script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+        <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+        <!-- Plugins Init js -->
+        <script src="assets/pages/form-advanced.js"></script>
+
+        <!--Timeline-->
+        <script type="text/javascript">
+            var claseProyectos = Parse.Object.extend("Proyectos");
+            var query = new Parse.Query(claseProyectos);
+
+            var url = document.URL;
+            var objectId = url.substr(url.indexOf("?")+1);
+
+            query.get(objectId,{
+                success: function(result) {
+                    // Actualiza fecha de deadline en DatetimePicker
+                    var fecha = result.get("Deadline");
+                    $('#datepicker-autoclose').datepicker("setDate", fecha);
+                    $('#currentDeadline').text(fecha.toDateString());
+                    $('#currentDeadline2').text(fecha.toDateString());
+
+                    // Genera Timeline
+                    $("#NombreProyecto").text(result.get("Nombre"));
+                    $("#Descripcion").text(result.get("Descripcion"));
+                    var eventos = result.relation("Eventos");
+                    var queryEventos = eventos.query();
+                    queryEventos.descending("createdAt");
+                    queryEventos.find({
+                      success: function(results) {
+                            var nextPorc = -1;
+                            var currentPorc = -1;
+                            var actType = "";
+                            var cambioFecha = false;
+                            for (var i = 0; i < results.length; i++){
+                                if (i < results.length-1){
+                                    nextPorc = results[i+1].get("Porcentaje");
+                                }else{
+                                    nextPorc = -1;
+                                }
+                                currentPorc = results[i].get("Porcentaje");
+                                cambioFecha = results[i].get("CambiaDeadline");
+                                if (currentPorc == 100){
+                                    actType = "cd-success";
+                                }else if(cambioFecha){
+                                    actType = "cd-pink";
+                                }else if(currentPorc > nextPorc){
+                                    actType = "cd-primary";
+                                }else if (currentPorc == nextPorc){
+                                    actType = "cd-warning";
+                                }else if(currentPorc < nextPorc){
+                                    actType = "cd-danger";
+                                }
+                                var evento = '<div class="cd-timeline-block"><div class="cd-timeline-img ' + actType + '"><p>'+ String(results[i].get("Porcentaje")) +'</p></div><div class="cd-timeline-content col-md-12 col-sm-12"><h3>' + String(results[i].get("Nombre")) + '</h3>';
+
+                                if (cambioFecha){
+                                    evento = evento + '<h5>Cambió deadline al ' + results[i].get("Deadline").toDateString() + '</h5>';
+                                }
+
+                                evento = evento + '<p>' + String(results[i].get("Comentario")) + '</p><span class="cd-date">' + dateToString(results[i].get("createdAt"),true,false)+'</span></div></div>';
+                                $("#cd-timeline").append(evento);
+                            }
+                      },
+                      error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                    });
+                },
+                error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+              }
+             });
+        </script>
+
+        <!--Comments Button-->
+        <script type="text/javascript">
+            $("#btnComentario").click(function(){
+                var nom = $('#nombre').val();
+                var porc = parseInt($('#porcentaje').val());
+                var pro = $('#comentario').val();
+                var cambioFecha = $("#myCheck")[0].checked;
+                var fecha = $("#datepicker-autoclose").datepicker("getDate");
+                var claseProyectos = Parse.Object.extend("Proyectos");
+                
+                // Creamos y guardamos el comentario
+                var claseEventos = Parse.Object.extend("EventosProyectos"); 
+                var comentario = new Parse.Object("EventosProyectos");
+                comentario.set("Nombre",nom);
+                comentario.set("Comentario",pro);
+                comentario.set("Porcentaje", porc);
+                comentario.set("CambiaDeadline",cambioFecha);
+                comentario.set("Deadline",fecha);
+                comentario.save({
+                    success: function(result) {
+                        var query = new Parse.Query(claseProyectos);
+                        var url = document.URL;
+                        var objectId = url.substr(url.indexOf("?")+1);
+                        query.get(objectId,{
+                            success: function(result) {
+                                var eventos = result.relation("Eventos");
+                                //eventos.add("Nombre",nom);
+                                eventos.add(comentario);
+                                result.set("Progreso", porc);
+                                result.set("Terminado", porc==100);
+                                if (cambioFecha){
+                                    result.set("Deadline",fecha);
+                                }
+                                result.save({
+                                    success: function(result) {
+                                        location.reload();
+                                        },
+                                    error: function(error) {
+                                        alert("Error: " + error.code + " " + error.message);
+                                    }
+                                });
+                            },
+                            error: function(error) {
+                                alert("Error: " + error.code + " " + error.message);
+                            }
+                        });
+                        },
+                    error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                    }
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            function Deadline() {
+              // Get the checkbox
+              var checkBox = document.getElementById("myCheck");
+              // Get the output text
+              var dead = document.getElementById("deadline");
+
+              // If the checkbox is checked, display the output text
+              if (checkBox.checked == true){
+                dead.style.display = "block";
+              } else {
+                dead.style.display = "none";
+              }
+            }
+        </script>
+
+        <script>
+            function redirectToTable(){
+                var url = document.URL;
+                var objectId = url.substr(url.indexOf("?")+1);
+                window.location = "proyectos-tabla.html?" + objectId;
+            }
+        </script>
+
+    </body>
+</html>

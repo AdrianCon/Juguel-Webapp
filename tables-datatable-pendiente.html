@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- #include file="includes_header.html" -->
+
+        <!-- DataTables -->
+        <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- #include file="header.html" -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <div class="">
+                        <div class="page-header-title">
+                            <h4 class="page-title">Tablas</h4>
+                        </div>
+                    </div>
+
+                    <div class="page-content-wrapper ">
+                        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="form-group col-lg-4 col-md-6 col-sm-12 col-xs-12 m-b-100" style="display: block;">
+                                                    <label>Filtrar Fechas</label>
+                                                    <div>
+                                                        <div class="input-daterange input-group" id="date-range">
+                                                            <input type="text" class="form-control" name="start">
+                                                            <span class="input-group-addon bg-primary text-white b-0">to</span>
+                                                            <input type="text" class="form-control" name="end">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <table id="datatable-buttons" class="table table-striped table-bordered display">
+                                                <thead>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Prioridad</th>
+                                                    <th>Progreso</th>
+                                                    <th>Terminado</th>
+                                                    <th>Fecha Iniciado</th>
+                                                    <th>Fecha Terminado</th>
+                                                </tr>
+                                                </thead>
+
+
+                                                <tbody>
+                                               
+                                                </tbody>
+                                            </table>    
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> <!-- End Row -->
+
+                        </div><!-- container -->
+
+                    </div> <!-- Page content Wrapper -->
+
+                </div> <!-- content -->
+
+                <footer class="footer">
+                    2018 - Juguel Uniformes
+                </footer>
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/modernizr.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+        <!-- Datatables-->
+        <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
+        <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+        <script src="assets/plugins/datatables/jszip.min.js"></script>
+        <script src="assets/plugins/datatables/pdfmake.min.js"></script>
+        <script src="assets/plugins/datatables/vfs_fonts.js"></script>
+        <script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+        <script src="assets/plugins/datatables/buttons.print.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.keyTable.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.scroller.min.js"></script>
+
+        <!-- Datatable init js -->
+        <script src="assets/pages/datatables.init.js"></script>
+
+        <script src="assets/js/app.js"></script>
+
+        <script type="text/javascript">
+            var Pendientes = Parse.Object.extend("Pendientes");
+            var query = new Parse.Query(Pendientes);
+            query.find({
+              success: function(results) {
+                var table = $('#datatable-buttons').DataTable();
+                // Do something with the returned Parse.Object values
+                for (var i = 0; i < results.length; i++) {
+                    var object = results[i];                    
+                    var data = [];
+                    data.push(String("<a href='/pendientes.html?"+ String(object.id) +"' style='color: #9fa2a7'><b>"+object.get("Pendiente")+"</b></a>"));
+                    data.push(String(object.get("Prioridad")));
+                    data.push(String(object.get("Progreso")));
+                    data.push(object.get("Terminado")? "Si" : "No");
+                    data.push(dateToString(object.get("createdAt"),true,false));
+                    data.push(dateToString(object.get("updatedAt"),true,false));
+                    table.row.add(data).draw();
+                }
+              },
+              error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+              }
+            });
+            //});
+        </script>
+
+    </body>
+</html>

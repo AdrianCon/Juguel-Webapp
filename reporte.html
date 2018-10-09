@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <!-- #include file="includes_header.html" -->
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- #include file="header.html" -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <div class="">
+                        <div class="page-header-title">
+                            <h4 class="page-title">Reporte</h4>
+                        </div>
+                    </div>
+
+                    <div class="page-content-wrapper ">
+
+                        <div class="container">
+                            <!-- Row start -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <h1 class="m-b-30 m-t-0">Proyectos</h1>
+
+                                            <div id="proyectos">
+                                                
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Row -->
+
+                        </div><!-- container -->
+
+                    </div> <!-- Page content Wrapper -->
+
+                </div> <!-- content -->
+
+                <footer class="footer">
+                    © 2016 - 2017 Appzia - All Rights Reserved.
+                </footer>
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/modernizr.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+        <script src="assets/js/app.js"></script>
+
+        <script type="text/javascript">
+            var Pendientes = Parse.Object.extend("Pendientes");
+            var query = new Parse.Query(Pendientes);
+            query.find({
+                success: function(results) {
+                // Do something with the returned Parse.Object values
+                var eventos = result.relation("Eventos");
+                var queryEventos = eventos.query();
+                queryEventos.find({
+                    success: function(results) {
+                        for (var i = 0; i < results.length; i++) {
+                            var object = results[i];                    
+                            var data = [];
+                            var datos = '<h4>'+ String(object.get("Pendiente")) + '<small> ' + String(object.get("Progreso")) + '</h4><small">\
+                            <p class="text-muted m-b-30">' + String(object.get("Progreso")) + '</p>'
+                            
+                            $("#proyectos").append(datos);
+                        }
+                      },
+                    error: function(error) {
+                        alert("Error: " + error.code + " " + error.message);
+                      }
+                    });
+                },
+                error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+              }
+             });
+        </script>
+
+        <!-- Word Export -->
+        <script src="assets/js/FileSaver.js"></script>
+        <script src="assets/js/jquery.wordexport.js"></script>
+    </body>
+</html>
